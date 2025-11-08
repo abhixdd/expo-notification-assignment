@@ -32,11 +32,23 @@
         "RECEIVE_BOOT_COMPLETED",
         "VIBRATE",
         "WAKE_LOCK",
-        "POST_NOTIFICATIONS"
+        "POST_NOTIFICATIONS",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
       ],
-      "useNextNotificationsApi": true,
+      "useNextNotificationsApi": false,
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "networkSecurityConfig": {
+        "domainConfig": [
+          {
+            "domain": ["*"],
+            "config": {
+              "cleartextTrafficPermitted": true
+            }
+          }
+        ]
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -47,7 +59,8 @@
         {
           "icon": "./assets/icon.png",
           "color": "#3B82F6",
-          "defaultChannel": "default"
+          "defaultChannel": "default",
+          "sounds": []
         }
       ],
       "expo-asset"

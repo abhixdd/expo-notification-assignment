@@ -60,19 +60,64 @@ class NotificationService {
   // Get Expo push token
   async getExpoPushToken(): Promise<string | null> {
     try {
-      const projectId =
-        Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+      console.log('Starting push token retrieval...');
+      console.log('Device info:', {
+        isDevice: Device.isDevice,
+        deviceName: Device.deviceName,
+        osName: Device.osName,
+        osVersion: Device.osVersion,
+        platform: Platform.OS
+      });
 
-      if (!projectId) {
-        console.warn('Project ID not found in app config');
+      if (!Device.isDevice) {
+        console.error('❌ Not running on physical device');
+        Alert.alert('Error', 'Push notifications only work on physical devices');
+        return null;
       }
 
-      const token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
-      console.log('✅ Expo Push Token:', token);
+      let projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? 
+                     Constants?.easConfig?.projectId ??
+                     Constants?.manifest?.extra?.eas?.projectId;
+
+      console.log('🔍 Project ID sources:', {
+        expoConfig: Constants?.expoConfig?.extra?.eas?.projectId,
+        easConfig: Constants?.easConfig?.projectId,
+        manifest: Constants?.manifest?.extra?.eas?.projectId,
+        final: projectId
+      });
+
+      console.log('🔍 Full Constants object:', JSON.stringify(Constants, null, 2));
+
+      if (!projectId) {
+        console.warn('⚠️ Project ID not found, using hardcoded value...');
+        projectId = '333bfcd2-1401-4b23-9dda-df0cab90b6c4';
+      }
+
+      console.log('Calling Expo Push Token API with projectId:', projectId);
+      const tokenData = await Notifications.getExpoPushTokenAsync({ 
+        projectId: projectId 
+      });
+      
+      const token = tokenData.data;
+      console.log('✅ Expo Push Token received:', token);
       return token;
     } catch (error) {
-      console.error('Error getting push token:', error);
-      Alert.alert('Error', 'Failed to get push token');
+      console.error('❌ Error getting push token:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorCode = error instanceof Error && 'code' in error ? (error as any).code : undefined;
+      const errorStack = error instanceof Error ? error.stack : undefined;
+      
+      console.error('Error details:', {
+        message: errorMessage,
+        code: errorCode,
+        stack: errorStack,
+        fullError: JSON.stringify(error, null, 2)
+      });
+      
+      Alert.alert(
+        'Push Token Error', 
+        `Failed to get push token from Expo servers.\n\nError: ${errorMessage}\n\nThis is needed for notifications to work.`
+      );
       return null;
     }
   }

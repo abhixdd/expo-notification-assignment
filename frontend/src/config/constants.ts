@@ -1,6 +1,6 @@
 // Application Constants
 
-export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://20fbfdec2d58.ngrok-free.app';
 export const APP_NAME = process.env.EXPO_PUBLIC_APP_NAME || 'Expo Notifications';
 export const ENV = process.env.EXPO_PUBLIC_ENV || 'development';
 

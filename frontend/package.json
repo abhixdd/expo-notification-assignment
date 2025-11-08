@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "npx expo@52 start",
-    "tunnel" : "npx expo@52 start --tunnel",
+    "tunnel": "npx expo@52 start --tunnel",
     "android": "npx expo@52 start --android",
     "ios": "npx expo@52 start --ios",
     "web": "npx expo@52 start --web"
@@ -16,6 +16,7 @@
     "expo": "~52.0.0",
     "expo-asset": "~11.0.5",
     "expo-constants": "~17.0.8",
+    "expo-dev-client": "~5.0.20",
     "expo-device": "~7.0.3",
     "expo-linking": "~7.0.5",
     "expo-notifications": "~0.29.14",

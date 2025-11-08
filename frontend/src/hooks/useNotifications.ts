@@ -91,16 +91,23 @@ export const useNotifications = () => {
 
       const hasPermission = await NotificationService.requestPermissions();
       if (!hasPermission) {
-        Alert.alert('Permission Denied', 'Notification permissions are required');
+        console.error('❌ Notification permissions denied');
+        Alert.alert('Permission Denied', 'Notification permissions are required. Please enable them in app settings and try again.');
         setShowUsernameModal(true);
         setIsLoading(false);
         return;
       }
 
+      console.log('✅ Notification permissions granted');
+
       // Get push token
+      console.log('Getting push token...');
       const token = await NotificationService.getExpoPushToken();
+      console.log('Push token result:', token ? 'SUCCESS' : 'FAILED');
+      
       if (!token) {
-        Alert.alert('Error', 'Failed to get push token');
+        console.error('❌ Push token is null/empty');
+        Alert.alert('Error', 'Failed to get push token. Please check notification permissions in app settings.');
         setShowUsernameModal(true);
         setIsLoading(false);
         return;
