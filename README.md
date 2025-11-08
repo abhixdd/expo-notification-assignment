@@ -109,7 +109,6 @@ npm run tunnel
 
 ## Documentation
 
-- **[Frontend Documentation](./frontend/README.md)** - Expo app setup, screens, and components
 - **[Backend Documentation](./backend/README.md)** - API endpoints, configuration, and examples
 
 ## GitHub Repository
