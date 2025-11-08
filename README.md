@@ -167,7 +167,7 @@ NODE_ENV=development
 
 ### Frontend `.env`
 ```env
-EXPO_PUBLIC_API_URL=https://your-ngrok-url.app
+EXPO_PUBLIC_API_URL=http://localhost:3000/
 EXPO_PUBLIC_APP_NAME=Expo Notifications
 EXPO_PUBLIC_ENV=development
 ```
