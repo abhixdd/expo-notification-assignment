@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "frontend": "cd frontend && npm run tunnel",
+    "frontend": "cd frontend && npm start",
     "backend": "cd backend && npm run dev",
     "install:all": "cd frontend && npm install && cd ../backend && npm install",
-    "dev": "start /B npm run backend && timeout /t 3 /nobreak >nul && npm run frontend",
+    "dev": "start \"Backend\" cmd /k \"npm run backend\" && start \"Frontend\" cmd /k \"npm run frontend\"",
     "build:backend": "cd backend && npm run build",
     "test": "npm test --workspaces"
   },
