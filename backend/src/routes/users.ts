@@ -1,10 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { Expo } from 'expo-server-sdk';
 import { db, COLLECTIONS } from '../firebase';
 import { FieldValue } from 'firebase-admin/firestore';
 
 const router = Router();
-const expo = new Expo();
 
 // POST /api/users/register (Register a new user)
 
@@ -16,15 +14,15 @@ router.post('/register', async (req: Request, res: Response) => {
     if (!name || !expoPushToken) {
       return res.status(400).json({
         status: 'error',
-        message: 'Name and expoPushToken are required',
+        message: 'Name and push token are required',
       });
     }
 
-    // Validate Expo push token format
-    if (!Expo.isExpoPushToken(expoPushToken)) {
+    // Validate token format (FCM tokens are typically long strings)
+    if (typeof expoPushToken !== 'string' || expoPushToken.length < 10) {
       return res.status(400).json({
         status: 'error',
-        message: 'Invalid Expo push token format',
+        message: 'Invalid push token format',
       });
     }
 
@@ -37,6 +35,7 @@ router.post('/register', async (req: Request, res: Response) => {
 
     if (!existingUserQuery.empty) {
       const existingDoc = existingUserQuery.docs[0];
+      console.log(`✅ User already exists: ${existingDoc.id}`);
       return res.json({
         status: 'success',
         message: 'User already registered',
@@ -56,7 +55,7 @@ router.post('/register', async (req: Request, res: Response) => {
       createdAt: FieldValue.serverTimestamp(),
     });
 
-    console.log(`✅ User registered: ${userDoc.id}`);
+    console.log(`✅ New user registered: ${userDoc.id} with FCM token`);
 
     res.status(201).json({
       status: 'success',
