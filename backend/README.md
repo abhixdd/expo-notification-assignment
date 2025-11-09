@@ -128,7 +128,7 @@ POST /api/users/register
 ```json
 {
   "name": "John Doe",
-  "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+  "expoPushToken": xxxxxxxxxxxxxxxxxxxxxx"
 }
 ```
 
@@ -141,7 +141,7 @@ POST /api/users/register
   "data": {
     "userId": "abc123xyz789",
     "name": "John Doe",
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxx",
     "createdAt": "2025-11-08T14:30:00.000Z"
   }
 }
@@ -156,7 +156,7 @@ POST /api/users/register
   "data": {
     "userId": "abc123xyz789",
     "name": "John Doe",
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "createdAt": "2025-11-08T14:30:00.000Z"
   }
 }
@@ -178,7 +178,7 @@ curl -X POST http://localhost:3000/api/users/register \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx"
   }'
 ```
 
@@ -191,7 +191,7 @@ curl -X POST http://localhost:3000/api/users/register \
   ```json
   {
     "name": "John Doe",
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx"
   }
   ```
 
@@ -215,7 +215,7 @@ GET /api/users/:userId
   "data": {
     "userId": "abc123xyz789",
     "name": "John Doe",
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "createdAt": {
       "_seconds": 1699454400,
       "_nanoseconds": 0
@@ -265,7 +265,7 @@ GET /api/users
       {
         "userId": "abc123xyz789",
         "name": "John Doe",
-        "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+        "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
         "createdAt": {
           "_seconds": 1699454400,
           "_nanoseconds": 0
@@ -274,7 +274,7 @@ GET /api/users
       {
         "userId": "def456uvw012",
         "name": "Jane Smith",
-        "expoPushToken": "ExponentPushToken[yyyyyyyyyyyyyyyyyyyyyy]",
+        "expoPushToken": "[yyyyyyyyyyyyyyyyyyyyyy]",
         "createdAt": {
           "_seconds": 1699454500,
           "_nanoseconds": 0
@@ -326,7 +326,7 @@ POST /api/notifications/send
 
 ```json
 {
-  "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+  "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
   "title": "Hello World",
   "body": "This is a test notification!",
   "data": {
@@ -404,7 +404,7 @@ curl -X POST http://localhost:3000/api/notifications/send \
 curl -X POST http://localhost:3000/api/notifications/send \
   -H "Content-Type: application/json" \
   -d '{
-    "expoPushToken": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    "expoPushToken": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "title": "Test Notification",
     "body": "Testing direct token notification"
   }'
@@ -491,7 +491,7 @@ curl http://localhost:3000/
 ```bash
 curl -X POST http://localhost:3000/api/users/register \
   -H "Content-Type: application/json" \
-  -d '{"name":"Test User","expoPushToken":"ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"}'
+  -d '{"name":"Test User","expoPushToken":"xxxxxxxxxxxxxxxxxxxxxxxxxx"}'
 ```
 
 3. **Get user ID from response and send notification**
@@ -519,7 +519,7 @@ Create a Postman collection with these requests:
 
 2. **Register User**
    - POST `http://localhost:3000/api/users/register`
-   - Body: `{"name":"Test User","expoPushToken":"ExponentPushToken[xxx]"}`
+   - Body: `{"name":"Test User","expoPushToken":"[xxx]"}`
 
 3. **Get User**
    - GET `http://localhost:3000/api/users/{{userId}}`
@@ -536,7 +536,7 @@ Create a Postman collection with these requests:
 Set these variables:
 - `baseUrl`: `http://localhost:3000`
 - `userId`: (get from register response)
-- `pushToken`: `ExponentPushToken[xxx]`
+- `pushToken`: `[xxx]`
 
 
 
