@@ -1,6 +1,6 @@
 // Application Constants
 
-export const API_URL = 'http://localhost:3000' ;
+export const API_URL =  process.env.API_URL || 'http://localhost:3000' ;
 export const APP_NAME = 'Expo Notifications';
 export const ENV = 'development';
 
@@ -21,3 +21,4 @@ export const API_ENDPOINTS = {
   GET_USER: (userId: string) => `/api/users/${userId}`,
   GET_USERS: '/api/users',
 };
+
