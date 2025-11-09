@@ -38,6 +38,23 @@ export const useNotifications = () => {
     NotificationService.configure();
     await NotificationService.setupAndroidChannel();
 
+    // Request permissions and get push token on app startup
+    let startupToken: string | null = null;
+    try {
+      const hasPermission = await NotificationService.requestPermissions();
+      if (hasPermission) {
+        startupToken = await NotificationService.getExpoPushToken();
+        if (startupToken) {
+          setExpoPushToken(startupToken);
+          console.log('✅ Got FCM token on startup:', startupToken.substring(0, 20) + '...');
+        }
+      } else {
+        console.log('Notification permissions not granted on startup');
+      }
+    } catch (error) {
+      console.error('Error requesting permissions on startup:', error);
+    }
+
     const savedUserId = await AsyncStorage.getItem('userId');
     const savedUserName = await AsyncStorage.getItem('userName');
 
@@ -47,6 +64,11 @@ export const useNotifications = () => {
         if (response.status === 'success' && response.data) {
           setUserId(savedUserId);
           setUserName(savedUserName);
+          
+          if (startupToken && startupToken !== response.data.expoPushToken) {
+            console.log('🔄 Token changed, re-registering user with new FCM token...');
+            await registerUser(savedUserName, startupToken);
+          }
           
           notificationListener.current = NotificationService.addNotificationListener((notification) => {
             console.log('Notification received:', notification);
@@ -65,7 +87,7 @@ export const useNotifications = () => {
       }
     }
 
-    // User doesn't exist or not found in backend, show username modal
+
     setShowUsernameModal(true);
     setIsLoading(false);
   };

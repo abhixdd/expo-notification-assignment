@@ -57,10 +57,9 @@ class NotificationService {
     return true;
   }
 
-  // Get Expo push token
   async getExpoPushToken(): Promise<string | null> {
     try {
-      console.log('Starting push token retrieval...');
+      console.log('Starting FCM token retrieval...');
       console.log('Device info:', {
         isDevice: Device.isDevice,
         deviceName: Device.deviceName,
@@ -75,34 +74,17 @@ class NotificationService {
         return null;
       }
 
-      let projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? 
-                     Constants?.easConfig?.projectId ??
-                     Constants?.manifest?.extra?.eas?.projectId;
-
-      console.log('🔍 Project ID sources:', {
-        expoConfig: Constants?.expoConfig?.extra?.eas?.projectId,
-        easConfig: Constants?.easConfig?.projectId,
-        manifest: Constants?.manifest?.extra?.eas?.projectId,
-        final: projectId
-      });
-
-      console.log('🔍 Full Constants object:', JSON.stringify(Constants, null, 2));
-
-      if (!projectId) {
-        console.warn('⚠️ Project ID not found, using hardcoded value...');
-        projectId = '333bfcd2-1401-4b23-9dda-df0cab90b6c4';
-      }
-
-      console.log('Calling Expo Push Token API with projectId:', projectId);
-      const tokenData = await Notifications.getExpoPushTokenAsync({ 
-        projectId: projectId 
-      });
+      // Get the native FCM device token instead of Expo push token
+      console.log('Getting native device push token (FCM)...');
+      const tokenData = await Notifications.getDevicePushTokenAsync();
       
       const token = tokenData.data;
-      console.log('✅ Expo Push Token received:', token);
+      console.log('✅ FCM Device Token received:', token);
+      console.log('Token type:', tokenData.type); // Should be 'fcm' for Android
+      
       return token;
     } catch (error) {
-      console.error('❌ Error getting push token:', error);
+      console.error('❌ Error getting FCM token:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       const errorCode = error instanceof Error && 'code' in error ? (error as any).code : undefined;
       const errorStack = error instanceof Error ? error.stack : undefined;
@@ -116,7 +98,7 @@ class NotificationService {
       
       Alert.alert(
         'Push Token Error', 
-        `Failed to get push token from Expo servers.\n\nError: ${errorMessage}\n\nThis is needed for notifications to work.`
+        `Failed to get FCM device token.\n\nError: ${errorMessage}\n\nThis is needed for notifications to work.`
       );
       return null;
     }

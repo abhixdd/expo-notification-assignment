@@ -13,7 +13,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/hooks": "^2.8.1",
     "axios": "^1.13.2",
-    "expo": "~52.0.0",
+    "expo": "~52.0.47",
     "expo-asset": "~11.0.5",
     "expo-constants": "~17.0.8",
     "expo-dev-client": "~5.0.20",
@@ -22,9 +22,10 @@
     "expo-notifications": "~0.29.14",
     "expo-status-bar": "~2.0.1",
     "react": "18.3.1",
-    "react-native": "0.76.9"
+    "react-native": "^0.76.3"
   },
   "devDependencies": {
+    "@react-native-community/cli": "^20.0.2",
     "@types/react": "^18.2.6",
     "typescript": "~5.9.2"
   },
